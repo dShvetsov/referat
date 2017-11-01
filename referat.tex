@@ -320,28 +320,37 @@ $$T_C = B / \big( \frac{3}{4}W \big)$$
 \section{Оценка алгоритмов}
 
 Создатели DCTCP проанализировали свой продукт, и показали что со случаем DCTCP очередь на коммутаторе намного меньше и постоянее, чем с классическим TCP (см~рис.\ref{queue_size}). 
-\begin{figure}
-	\includegraphics[width=\linewidth]{queue_size}
+На рисунке~\ref{queue_size2} представлена функция распределения вероятности длины очереди (в пакетах) с параметром $K$ равным 20, в соответствии с рекомендациями. В эксперименте использовались коммутатор со портами скоростью 1 Гб/с, в результате было выявлено, что DCTCP достиг максимульной пропускной способности 0.95 Гб/c, а утилизация канала близка с 100\%. Но по сравнению с TCP длина очереди устанавливается в районе 20 пакетов, что более чем в 10 раз меньше, чем длина очереди TCP.
+
+\begin{figure}[h]
+	\includegraphics[width=0.7\linewidth]{queue_size}
 	\caption{Загрузка очереди на коммутаторе с динамическим распределением памяти.}
 	\label{queue_size}
 \end{figure}
-На рисунке~\ref{queue_size2} представлена функция распределения вероятности длины очереди (в пакетах) с параметром $K$ равным 20, в соответствии с рекомендациями. В эксперименте использовались коммутатор со портами скоростью 1 Гб/с, в результате было выявлено, что DCTCP достиг максимульной пропускной способности 0.95 Гб/c, а утилизация канала близка с 100\%. Но по сравнению с TCP длина очереди устанавливается в районе 20 пакетов, что более чем в 10 раз меньше, чем длина очереди TCP.
-\begin{figure}
-	\includegraphics[width=0.5\linewidth]{queue_size2}
-	\caption{Функция распределения вероятности для длины очереди (1Гб/c)}
-	\label{queueu_size2}
-\end{figure}
+
 
 Так же исследователи измерили пропускную способность в зависимости от параметра $K$ на соединениях скоростью 10Гб/c (результаты представлены на рисунке~\ref{throughput}). Было обнаружено, что когда $K$ превышает рекомендованное значение 65 DCTCP работает с той же пропускной способностью, что и TCP, и больше не чувствителен к параметру $K$.
 \begin{figure}
-	\includegraphics[width=0.5\linewidth]{throughput}
+\begin{floatrow}
+\ffigbox{
+	\includegraphics[width=0.7\linewidth]{queue_size2}
+}{
+	\caption{Функция распределения вероятности для длины очереди (1Гб/c)}
+	\label{queueu_size2}
+}
+
+\ffigbox{%
+	\includegraphics[width=0.7\linewidth]{throughput}
+}{
 	\caption{Пропускная способность (10 Гб/с)}
 	\label{throughput}
+}
+\end{floatrow}
 \end{figure}
 
 Исследователями было показано, что DCTCP быстрее достигает сходимости к справедливому разделению пропускной способности(см.~рис~\ref{fair_share}), для этого они последовательно запускали 6 потоков, после чего останавливали их.
 \begin{figure}
-	\includegraphics[width=\linewidth]{fair_share}
+	\includegraphics[width=0.7\linewidth]{fair_share}
 	\caption{Тест сходимости DCTCP и TCP}
 	\label{fair_share}
 \end{figure}
@@ -349,33 +358,33 @@ $$T_C = B / \big( \frac{3}{4}W \big)$$
 Так же исследователи показали пакеты в DCTCP, передаются с куда меньшей задержкой в очереди, и доля пакетов, отправленных по тайм-ауту, равняется нулю вплоть до 35 отправителей (см.~рис~\ref{delays}).
 
 \begin{figure}
-	\includegraphics[width=\linewidth]{delays1}
+	\includegraphics[width=0.7\linewidth]{delays1}
 	\caption{Длина очереди для DCTCP и TCP. Доля пакетов, отправленных по тайм-ауту}
 	\label{delays}
 \end{figure}
 
 Создатели протокола D\textsuperscript{3} показали, что их протокол обеспечивает большую \emph{пропускную способность приложений} (скорость передачи, при условии, что передающий их поток, успел завершиьтся в свой директивный интервал) по сравнению с протоколами TCP, TCP\textsubscript{pr} и RCP\textsubscript{pr}~(см.~рис.\ref{d3_throughput}).  
 \begin{figure}
-	\includegraphics[width=\linewidth]{d3_throughput}
+	\includegraphics[width=0.7\linewidth]{d3_throughput}
 	\caption{Пропускная способность приложений для разного количество независимых отправителей с директивными интервалами}
 	\label{d3_throughput}
 \end{figure}
 
 Протокол D\textsuperscript{2}TCP является обобщение протокола является обобщением, протокола DCTCP для работы с потоками, имеющими директивные интервалы, и, следственно, к нему справедливо наследует преимущества DCTCP. При этом исследователи показали, что с помощью D\textsuperscript{2}TCP меньше потоков не уместились в свои директивные интервалы по сравнению в протоколами TCP, DCTCP и D\textsuperscript{3} как без фонового трафика (см.~рис.~\ref{d2_missed_deadlines}), так и с фоновым трафиком (см.~рис.~\ref{d2_back_missed_deadlines}), при этом пропускная способность фонового трафика остается высокой (см.~рис.~\ref{d2_back_flows}).
 \begin{figure}
-	\includegraphics[width=\linewidth]{d2_missed_deadlines}
+	\includegraphics[width=0.7\linewidth]{d2_missed_deadlines}
 	\caption{Процент потоков, не уложившихся в свои директивные интервалы в зависимости от количества отправителей}
 	\label{d2_missed_deadlines}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=\linewidth]{d2_back_missed_deadlines}
+	\includegraphics[width=0.7\linewidth]{d2_back_missed_deadlines}
 	\caption{Процент потоков, не уложившихся в свои директивные интервалы в зависимости от количества отправителей, при фоновом трафике}
 	\label{d2_back_missed_deadlines}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=\linewidth]{d2_back_flows}
+	\includegraphics[width=0.7\linewidth]{d2_back_flows}
 	\caption{Пропускная способность фонового трафика в зависимости от количества отправителей}
 	\label{d2_back_flows}
 \end{figure}
